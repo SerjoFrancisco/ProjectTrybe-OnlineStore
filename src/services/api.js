@@ -22,5 +22,4 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
     console.log(err);
     return {};
   }
-  // Implemente aqui! Quando o fizer, descomente os parâmetros que essa função recebe
 }
