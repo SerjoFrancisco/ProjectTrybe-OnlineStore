@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-export default class index extends Component {
+export default class Home extends Component {
   render() {
     return (
       <div>
@@ -8,6 +9,7 @@ export default class index extends Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
+        <Link to="/cart" data-testid="shopping-cart-button">Cart</Link>
       </div>
     );
   }
