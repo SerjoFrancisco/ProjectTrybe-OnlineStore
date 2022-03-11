@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories } from '../../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
+import ProductCard from '../../components/ProductCard/index';
 
 export default class Home extends Component {
   constructor() {
     super();
+    this.searchForProducts = this.searchForProducts.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.state = {
       categorias: [],
+      pesquisa: '',
+      products: [],
     };
   }
 
@@ -15,11 +20,37 @@ export default class Home extends Component {
     this.setState({ categorias });
   }
 
+  handleChange({ target }) {
+    this.setState({ pesquisa: target.value });
+  }
+
+  async searchForProducts() {
+    const { pesquisa } = this.state;
+    const products = await getProductsFromCategoryAndQuery(pesquisa);
+    this.setState({ products });
+    console.log(products);
+  }
+
   render() {
-    const { categorias } = this.state;
+    const { categorias, products } = this.state;
     return (
       <div>
-        <input />
+        <label htmlFor="input">
+          <input
+            id="input"
+            type="text"
+            data-testid="query-input"
+            onChange={ this.handleChange }
+          />
+          <button
+            data-testid="query-button"
+            type="button"
+            onClick={ this.searchForProducts }
+          >
+            Pesquisar
+
+          </button>
+        </label>
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
@@ -36,7 +67,13 @@ export default class Home extends Component {
               </button>))
           }
         </section>
-
+        <main>
+          { products?.results?.map((element) => (
+            <ProductCard
+              key={ element.id }
+              { ...element }
+            />)) }
+        </main>
       </div>
     );
   }
