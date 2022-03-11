@@ -8,31 +8,37 @@ export default class Home extends Component {
     super();
     this.searchForProducts = this.searchForProducts.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getCategoryId = this.getCategoryId.bind(this);
+
     this.state = {
-      categorias: [],
-      pesquisa: '',
+      category: [],
+      query: '',
       products: [],
+      categoryId: '',
     };
   }
 
   async componentDidMount() {
-    const categorias = await getCategories();
-    this.setState({ categorias });
+    const category = await getCategories();
+    this.setState({ category });
   }
 
   handleChange({ target }) {
-    this.setState({ pesquisa: target.value });
+    this.setState({ query: target.value });
+  }
+
+  getCategoryId({ target: { id } }) {
+    this.setState({ categoryId: id }, () => this.searchForProducts());
   }
 
   async searchForProducts() {
-    const { pesquisa } = this.state;
-    const products = await getProductsFromCategoryAndQuery(pesquisa);
-    this.setState({ products });
-    console.log(products);
+    const { query, categoryId } = this.state;
+    const products = await getProductsFromCategoryAndQuery(query, categoryId);
+    this.setState({ products, query: '' });
   }
 
   render() {
-    const { categorias, products } = this.state;
+    const { category, products, query } = this.state;
     return (
       <div>
         <label htmlFor="input">
@@ -41,13 +47,14 @@ export default class Home extends Component {
             type="text"
             data-testid="query-input"
             onChange={ this.handleChange }
+            value={ query }
           />
           <button
             data-testid="query-button"
             type="button"
             onClick={ this.searchForProducts }
           >
-            Pesquisar
+            queryr
 
           </button>
         </label>
@@ -57,11 +64,13 @@ export default class Home extends Component {
         <Link to="/cart" data-testid="shopping-cart-button">Cart</Link>
         <section>
           {
-            categorias.map(({ name, id }) => (
+            category.map(({ name, id }) => (
               <button
                 key={ id }
                 type="button"
                 data-testid="category"
+                onClick={ this.getCategoryId }
+                id={ id }
               >
                 { name }
               </button>))
