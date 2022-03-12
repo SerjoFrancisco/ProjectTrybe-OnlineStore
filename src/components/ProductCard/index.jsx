@@ -8,7 +8,7 @@ export default class ProductCard extends Component {
     return (
       <div id="container">
         <Link to={ `/product-details/${id}` }>
-          <div data-testid="product">
+          <div data-testid="product-detail-link">
             <h3>{ title }</h3>
             <img src={ thumbnail } alt="" />
             <p>{`R$: ${price} `}</p>
