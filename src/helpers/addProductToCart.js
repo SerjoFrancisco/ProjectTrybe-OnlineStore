@@ -8,7 +8,6 @@ function addProductToCart(infos) {
         const a = item.id === infos.id ? ({ ...item, amount: item.amount += 1 }) : item;
         return a;
       });
-      console.log(arr);
       localStorage.setItem('cartItems', JSON.stringify(arr));
     } else {
       localStorage.setItem('cartItems', JSON.stringify([...cartItems, infos]));
