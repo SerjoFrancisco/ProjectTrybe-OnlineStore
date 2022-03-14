@@ -9,12 +9,14 @@ export default class Home extends Component {
     this.searchForProducts = this.searchForProducts.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getCategoryId = this.getCategoryId.bind(this);
+    this.addProductToCart = this.addProductToCart.bind(this);
 
     this.state = {
       category: [],
       query: '',
       products: [],
       categoryId: '',
+      cart: [],
     };
   }
 
@@ -37,6 +39,11 @@ export default class Home extends Component {
     this.setState({ products, query: '' });
   }
 
+  addProductToCart({ target }) {
+    this.setState((prev) => ({
+      cart: [...prev.cart, target.previousSibling.id] }));
+  }
+
   render() {
     const { category, products, query } = this.state;
     return (
@@ -54,7 +61,7 @@ export default class Home extends Component {
             type="button"
             onClick={ this.searchForProducts }
           >
-            queryr
+            Pesquisa
 
           </button>
         </label>
@@ -81,6 +88,7 @@ export default class Home extends Component {
             <ProductCard
               key={ element.id }
               { ...element }
+              addProductToCart={ this.addProductToCart }
             />)) }
         </main>
       </div>
