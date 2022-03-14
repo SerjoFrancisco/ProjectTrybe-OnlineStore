@@ -9,6 +9,7 @@ export default class Home extends Component {
     this.searchForProducts = this.searchForProducts.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.getCategoryId = this.getCategoryId.bind(this);
+    this.addProductToCart = this.addProductToCart.bind(this);
 
     this.state = {
       category: [],
@@ -37,6 +38,31 @@ export default class Home extends Component {
     this.setState({ products, query: '' });
   }
 
+  // addProductToCart({ target }) {
+  //   this.setState((prev) => ({
+  //     cart: [...prev.cart, target.previousSibling.id] }));
+  // }
+
+  addProductToCart(infos) {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+    infos.amount += 1;
+    if (cartItems) {
+      const cartItem = cartItems.find((item) => item.id === infos.id);
+      if (cartItem) {
+        const arr = cartItems.map((item) => {
+          const a = item.id === infos.id ? ({ ...item, amount: item.amount += 1 }) : item;
+          return a;
+        });
+        console.log(arr);
+        localStorage.setItem('cartItems', JSON.stringify(arr));
+      } else {
+        localStorage.setItem('cartItems', JSON.stringify([...cartItems, infos]));
+      }
+    } else {
+      localStorage.setItem('cartItems', JSON.stringify([infos]));
+    }
+  }
+
   render() {
     const { category, products, query } = this.state;
     return (
@@ -54,7 +80,7 @@ export default class Home extends Component {
             type="button"
             onClick={ this.searchForProducts }
           >
-            queryr
+            Pesquisa
 
           </button>
         </label>
@@ -81,6 +107,7 @@ export default class Home extends Component {
             <ProductCard
               key={ element.id }
               { ...element }
+              addProductToCart={ this.addProductToCart }
             />)) }
         </main>
       </div>
