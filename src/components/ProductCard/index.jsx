@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default class ProductCard extends Component {
+  handleClick = () => {
+    const { addProductToCart, title, thumbnail, price, id } = this.props;
+    const infos = { title, thumbnail, price, id, amount: 0 };
+    addProductToCart(infos);
+  }
+
   render() {
-    const { title, thumbnail, price, id, addProductToCart } = this.props;
+    const { title, thumbnail, price, id } = this.props;
     return (
       <div id="container" data-testid="product">
         <Link to={ `/product-details/${id}` } id={ id }>
@@ -17,7 +23,7 @@ export default class ProductCard extends Component {
         <button
           type="button"
           data-testid="product-add-to-cart"
-          onClick={ addProductToCart }
+          onClick={ this.handleClick }
         >
           Add to Cart
         </button>
