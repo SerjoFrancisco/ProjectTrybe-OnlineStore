@@ -1,3 +1,5 @@
+import increaseQty from './increaseQty';
+
 export default function increaseItemOnCart({ target }) {
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
   const arr = cartItems.map((item) => {
@@ -7,4 +9,5 @@ export default function increaseItemOnCart({ target }) {
     return a;
   });
   localStorage.setItem('cartItems', JSON.stringify(arr));
+  localStorage.setItem('qty', JSON.stringify(increaseQty()));
 }

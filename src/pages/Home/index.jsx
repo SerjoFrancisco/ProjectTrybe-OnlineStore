@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import ProductCard from '../../components/ProductCard/index';
+import Header from '../../components/Header/index';
 
 export default class Home extends Component {
   constructor() {
@@ -15,12 +15,14 @@ export default class Home extends Component {
       query: '',
       products: [],
       categoryId: '',
+      qty: 0,
     };
   }
 
   async componentDidMount() {
     const category = await getCategories();
-    this.setState({ category });
+    const qty = localStorage.getItem('qty');
+    this.setState({ category, qty });
   }
 
   handleChange({ target }) {
@@ -29,6 +31,11 @@ export default class Home extends Component {
 
   getCategoryId({ target: { id } }) {
     this.setState({ categoryId: id }, () => this.searchForProducts());
+  }
+
+  increaseQty = () => {
+    const qty = localStorage.getItem('qty');
+    this.setState({ qty });
   }
 
   async searchForProducts() {
@@ -63,9 +70,10 @@ export default class Home extends Component {
   // }
 
   render() {
-    const { category, products, query } = this.state;
+    const { category, products, query, qty } = this.state;
     return (
       <div>
+        <Header qty={ qty } />
         <label htmlFor="input">
           <input
             id="input"
@@ -86,7 +94,6 @@ export default class Home extends Component {
         <p data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </p>
-        <Link to="/cart" data-testid="shopping-cart-button">Cart</Link>
         <section>
           {
             category.map(({ name, id }) => (
@@ -106,6 +113,7 @@ export default class Home extends Component {
             <ProductCard
               key={ element.id }
               { ...element }
+              increaseQty={ this.increaseQty }
             />)) }
         </main>
       </div>
