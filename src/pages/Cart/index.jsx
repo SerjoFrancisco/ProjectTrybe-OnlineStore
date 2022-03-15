@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import CartItem from '../../components/CartItem';
 import increaseItemOnCart from '../../helpers/ItensCart';
 
@@ -36,6 +37,9 @@ export default class Cart extends Component {
             <p data-testid="shopping-cart-empty-message">
               Seu carrinho está vazio
             </p>)}
+        <Link to="/checkout">
+          <button type="button" data-testid="checkout-products">Finalizar Compra</button>
+        </Link>
       </div>
     );
   }

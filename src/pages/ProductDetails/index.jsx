@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getProductFromId } from '../../services/api';
 import addProductToCart from '../../helpers/addProductToCart';
 import Header from '../../components/Header/index';
+import Forms from '../../components/Forms/Forms';
 
 export default class ProductDetails extends Component {
   constructor() {
@@ -11,6 +12,10 @@ export default class ProductDetails extends Component {
       productId: '',
       product: {},
       qty: 0,
+      email: '',
+      messageDescription: '',
+      starRating: '',
+      savedRates: [],
     };
   }
 
@@ -18,7 +23,8 @@ export default class ProductDetails extends Component {
     const { match: { params } } = this.props;
     const { productId } = params;
     const qty = localStorage.getItem('qty');
-    this.setState({ productId, qty }, () => this.productOnState());
+    const savedRates = JSON.parse(localStorage.getItem('rate'));
+    this.setState({ productId, savedRates, qty }, () => this.productOnState());
   }
 
   handleClick = () => {
@@ -29,6 +35,29 @@ export default class ProductDetails extends Component {
     this.setState({ qty });
   }
 
+  saveRate = () => {
+    const { email, messageDescription, starRating } = this.state;
+    const savedRates = JSON.parse(localStorage.getItem('rate'));
+    const toSave = savedRates
+      ? [...savedRates, { email, messageDescription, starRating }]
+      : [{ email, messageDescription, starRating }];
+    localStorage.setItem('rate',
+      JSON.stringify(toSave));
+    this.setState(
+      { savedRates: toSave,
+        email: '',
+        messageDescription: '',
+        starRating: '' },
+    );
+  }
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
   async productOnState() {
     const { productId } = this.state;
     const details = await getProductFromId(productId);
@@ -36,7 +65,7 @@ export default class ProductDetails extends Component {
   }
 
   render() {
-    const { state: { product, qty } } = this;
+    const { product, email, messageDescription, savedRates, qty } = this.state;
     return (
       <div>
         <Header qty={ qty } />
@@ -56,6 +85,22 @@ export default class ProductDetails extends Component {
         >
           Add to Cart
         </button>
+        <Forms
+          messageDescription={ messageDescription }
+          onChange={ this.handleChange }
+          email={ email }
+          onClick={ this.saveRate }
+        />
+
+        {
+          savedRates?.map((item, i) => (
+            <div key={ i }>
+              <p>{item.email}</p>
+              <p>{item.messageDescription}</p>
+              <p>{item.starRating}</p>
+            </div>
+          ))
+        }
       </div>
     );
   }
