@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getProductFromId } from '../../services/api';
 import addProductToCart from '../../helpers/addProductToCart';
+import Header from '../../components/Header/index';
 import Forms from '../../components/Forms/Forms';
 
 export default class ProductDetails extends Component {
@@ -11,6 +11,7 @@ export default class ProductDetails extends Component {
     this.state = {
       productId: '',
       product: {},
+      qty: 0,
       email: '',
       messageDescription: '',
       starRating: '',
@@ -21,14 +22,17 @@ export default class ProductDetails extends Component {
   componentDidMount() {
     const { match: { params } } = this.props;
     const { productId } = params;
+    const qty = localStorage.getItem('qty');
     const savedRates = JSON.parse(localStorage.getItem('rate'));
-    this.setState({ productId, savedRates }, () => this.productOnState());
+    this.setState({ productId, savedRates, qty }, () => this.productOnState());
   }
 
   handleClick = () => {
     const { product: { title, thumbnail, price, id } } = this.state;
     const infos = { title, thumbnail, price, id, amount: 0 };
     addProductToCart(infos);
+    const qty = localStorage.getItem('qty');
+    this.setState({ qty });
   }
 
   saveRate = () => {
@@ -61,10 +65,10 @@ export default class ProductDetails extends Component {
   }
 
   render() {
-    const { product, email, messageDescription, savedRates } = this.state;
+    const { product, email, messageDescription, savedRates, qty } = this.state;
     return (
       <div>
-        <Link to="/cart" data-testid="shopping-cart-button">Cart</Link>
+        <Header qty={ qty } />
         <section>
           <h3 data-testid="product-detail-name">{product.title}</h3>
           <img src={ product.thumbnail } alt={ product.title } />
