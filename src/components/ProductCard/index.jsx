@@ -8,19 +8,28 @@ export default class ProductCard extends Component {
     console.log(this.props);
     const { title, thumbnail, price, id, increaseQty,
       available_quantity: availableQuantity } = this.props;
-    const infos = { title, thumbnail, price, id, availableQuantity, amount: 0 };
+    const infos = {
+      title,
+      thumbnail,
+      price,
+      id,
+      availableQuantity,
+      amount: 0,
+    };
     addProductToCart(infos);
     increaseQty();
   }
 
   render() {
-    const { title, thumbnail, price, id } = this.props;
+    const { title, thumbnail, price, id,
+      shipping: { free_shipping: freeShipping } } = this.props;
     return (
       <div id="container" data-testid="product">
         <Link to={ `/product-details/${id}` } id={ id }>
           <div data-testid="product-detail-link" id={ id }>
             <h3>{ title }</h3>
             <img src={ thumbnail } alt="" />
+            { freeShipping && <p data-testid="free-shipping"> Frete grátis </p> }
             <p>{`R$: ${price} `}</p>
           </div>
         </Link>

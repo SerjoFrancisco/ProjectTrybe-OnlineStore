@@ -73,6 +73,8 @@ export default class ProductDetails extends Component {
           <h3 data-testid="product-detail-name">{product.title}</h3>
           <img src={ product.thumbnail } alt={ product.title } />
           <p>{`R$: ${product.price} `}</p>
+          { product.shipping.free_shipping
+          && <p data-testid="free-shipping">Frete grátis</p> }
         </section>
         <section>
           <p>{`Itens Disponiveis:${product.available_quantity}`}</p>
