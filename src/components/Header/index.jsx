@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default class Header extends Component {
   render() {
@@ -16,3 +17,7 @@ export default class Header extends Component {
     );
   }
 }
+
+Header.propTypes = {
+  qty: PropTypes.number,
+}.isRequired;
