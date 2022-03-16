@@ -1,4 +1,5 @@
 import increaseQty from './increaseQty';
+import checkAvailableQuantity from './checkAvailableQuantity';
 
 function addProductToCart(infos) {
   const cartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -8,7 +9,13 @@ function addProductToCart(infos) {
     const cartItem = cartItems.find((item) => item.id === infos.id);
     if (cartItem) {
       toSave = cartItems.map((item) => {
-        const a = item.id === infos.id ? ({ ...item, amount: item.amount += 1 }) : item;
+        const a = item.id === infos.id
+          ? ({
+            ...item,
+            amount:
+              checkAvailableQuantity(item.amount, item.availableQuantity),
+          })
+          : item;
         return a;
       });
     } else {

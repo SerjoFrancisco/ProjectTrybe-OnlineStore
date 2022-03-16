@@ -5,8 +5,10 @@ import addProductToCart from '../../helpers/addProductToCart';
 
 export default class ProductCard extends Component {
   handleClick = () => {
-    const { title, thumbnail, price, id, increaseQty } = this.props;
-    const infos = { title, thumbnail, price, id, amount: 0 };
+    console.log(this.props);
+    const { title, thumbnail, price, id, increaseQty,
+      available_quantity: availableQuantity } = this.props;
+    const infos = { title, thumbnail, price, id, availableQuantity, amount: 0 };
     addProductToCart(infos);
     increaseQty();
   }
