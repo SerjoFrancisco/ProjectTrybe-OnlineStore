@@ -1,0 +1,35 @@
+.header {
+  background-color: black;
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  width: 300px;
+}
+
+.qty-cart {
+  background-color: red;
+  border: 2px solid red;
+  border-radius: 50%;
+  color: white;
+  font-size: 10px;
+  height: 10px;
+  justify-items: center;
+  margin-top: 10px;
+  position: absolute;
+  text-align: center;
+  width: 10px;
+  z-index: 1;
+}
+
+.image-cart {
+  background-color: black;
+  padding: 14.5px;
+  position: relative;
+  width: 25px;
+  z-index: 0;
+}
+

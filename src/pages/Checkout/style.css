@@ -1,0 +1,36 @@
+.form-title {
+  font-size: 50px;
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+.form-container {
+  display: block;
+  justify-content: center;
+  margin-bottom: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.name, .address {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 5px;
+  margin: 15px;
+  padding: 10px;
+  width: 90%;
+}
+
+.form-boxone, .form-boxtwo {
+  display: flex;
+  width: 100%;
+}
+
+.email, .cpf, .cellphone, .cep {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 5px;
+  margin: 15px;
+  padding: 10px;
+  width: 42.5%;
+}
