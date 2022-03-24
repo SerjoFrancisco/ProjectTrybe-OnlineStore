@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CartItem from '../../components/CartItem';
 import increaseItemOnCart from '../../helpers/ItensCart';
+import Header from '../../components/Header';
+import './style.css';
 
 export default class Cart extends Component {
   constructor() {
@@ -21,9 +23,11 @@ export default class Cart extends Component {
     const { products } = this.state;
 
     return (
-      <div>
+      <div className="cart-web">
+        <Header />
+        <h1 className="cart-title">Carrinho de Compras</h1>
         { products?.length ? (
-          <div>
+          <div className="shopping-container">
             {products.map((product) => (
               <CartItem
                 key={ product.id }
@@ -34,11 +38,17 @@ export default class Cart extends Component {
           </div>
         )
           : (
-            <p data-testid="shopping-cart-empty-message">
+            <p className="empty-cart" data-testid="shopping-cart-empty-message">
               Seu carrinho está vazio
             </p>)}
         <Link to="/checkout">
-          <button type="button" data-testid="checkout-products">Finalizar Compra</button>
+          <button
+            className="checkout-button"
+            type="button"
+            data-testid="checkout-products"
+          >
+            Finalizar Compra
+          </button>
         </Link>
       </div>
     );

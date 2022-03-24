@@ -1,0 +1,59 @@
+.shopping-item {
+  background-color: white;
+  border: 5px;
+  box-shadow: 2px 2px 5px rgb(54, 54, 54);
+  display: flex;
+  justify-content: space-between;
+  margin: 15px;
+  padding: 20px;
+}
+
+.item-first, .item-second {
+  background-color: white;
+}
+
+.item-title {
+  background-color: white;
+  color: black;
+  font-size: 16px;
+}
+
+.item-img {
+  background-color: white;
+  width: 250px;
+}
+
+.item-price {
+  background-color: white;
+  font-size: 32px;
+}
+
+.item-amount {
+  background-color: white;
+  font-size: 16px;
+}
+
+.item-button-amount {
+  background-color: black;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: white;
+  height: 30px;
+  margin: 5px;
+  width: 30px;
+}
+
+.item-button-rmv {
+  background-color: black;
+  border: 2px solid black;
+  border-radius: 10px;
+  color: white;
+  height: 30px;
+  margin: 5px;
+  width: 80px;
+}
+
+.item-button-amount:hover, .item-button-rmv:hover {
+  background-color: gray;
+  cursor: pointer;
+}

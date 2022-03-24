@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { getCategories, getProductsFromCategoryAndQuery } from '../../services/api';
 import ProductCard from '../../components/ProductCard/index';
 import Header from '../../components/Header/index';
+import searchButton from '../../components/Images/search.svg';
+import './style.css';
 
 export default class Home extends Component {
   constructor() {
@@ -74,48 +76,61 @@ export default class Home extends Component {
     return (
       <div>
         <Header qty={ qty } />
-        <label htmlFor="input">
-          <input
-            id="input"
-            type="text"
-            data-testid="query-input"
-            onChange={ this.handleChange }
-            value={ query }
-          />
-          <button
-            data-testid="query-button"
-            type="button"
-            onClick={ this.searchForProducts }
+        <div className="container-search">
+          <label htmlFor="input" className="label-search">
+            <input
+              id="input"
+              className="input-search"
+              type="text"
+              data-testid="query-input"
+              onChange={ this.handleChange }
+              value={ query }
+            />
+            <button
+              className="button-search"
+              data-testid="query-button"
+              type="button"
+              onClick={ this.searchForProducts }
+            >
+              <img src={ searchButton } alt="pesquisar" />
+              Pesquisar
+            </button>
+          </label>
+          <p className="p-search" data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+        </div>
+        <div className="main-container">
+          <section
+            className="categories-section"
           >
-            Pesquisa
-
-          </button>
-        </label>
-        <p data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
-        <section>
-          {
-            category.map(({ name, id }) => (
-              <button
-                key={ id }
-                type="button"
-                data-testid="category"
-                onClick={ this.getCategoryId }
-                id={ id }
-              >
-                { name }
-              </button>))
-          }
-        </section>
-        <main>
-          { products?.results?.map((element) => (
-            <ProductCard
-              key={ element.id }
-              { ...element }
-              increaseQty={ this.increaseQty }
-            />)) }
-        </main>
+            {
+              category.map(({ name, id }) => (
+                <>
+                  <button
+                    key={ id }
+                    type="button"
+                    data-testid="category"
+                    className="categories-button"
+                    onClick={ this.getCategoryId }
+                    id={ id }
+                  >
+                    {name}
+                  </button>
+                  <hr />
+                </>
+              ))
+            }
+          </section>
+          <main className="main-list">
+            { products?.results?.map((element) => (
+              <ProductCard
+                key={ element.id }
+                { ...element }
+                increaseQty={ this.increaseQty }
+              />)) }
+          </main>
+        </div>
       </div>
     );
   }

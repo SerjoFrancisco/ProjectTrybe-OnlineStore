@@ -1,0 +1,56 @@
+.product-title {
+  font-size: 50px;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.section-container {
+  background-color: white;
+  border: 5px;
+  box-shadow: 2px 2px 5px rgb(54, 54, 54);
+  display: block;
+  margin: 50px;
+  padding: 20px;
+}
+
+.section-product {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.product-image {
+  background-color: white;
+  margin-top: 50px;
+  width: 50%;
+}
+
+.free-product {
+  color: rgb(10, 143, 10);
+}
+
+.price, .free-product, .available {
+  background-color: white;
+  font-size: 30px;
+  text-align: center;
+}
+
+.button-section {
+  background-color: black;
+  border-radius: 10px;
+  color: white;
+  font-family: Helvetica , Arial , sans-serif;
+  font-size: 15px;
+  justify-content: center;
+  margin-left: 10%;
+  padding: 10px;
+  text-align: center;
+  width: 80%;
+}
+
+.button-section:hover {
+  background-color: gray;
+  border: 2px solid black;
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ import { getProductFromId } from '../../services/api';
 import addProductToCart from '../../helpers/addProductToCart';
 import Header from '../../components/Header/index';
 import Forms from '../../components/Forms/Forms';
+import './style.css';
 
 export default class ProductDetails extends Component {
   constructor() {
@@ -69,23 +70,36 @@ export default class ProductDetails extends Component {
     return (
       <div>
         <Header qty={ qty } />
-        <section>
-          <h3 data-testid="product-detail-name">{product.title}</h3>
-          <img src={ product.thumbnail } alt={ product.title } />
-          <p>{`R$: ${product.price} `}</p>
-          { product.shipping.free_shipping
-          && <p data-testid="free-shipping">Frete grátis</p> }
-        </section>
-        <section>
-          <p>{`Itens Disponiveis:${product.available_quantity}`}</p>
-          {product.tags?.map((tag, index) => <p key={ index }>{tag}</p>)}
-        </section>
+        <h3
+          className="product-title"
+          data-testid="product-detail-name"
+        >
+          {product.title}
+        </h3>
+        <div className="section-container">
+          <section className="section-product">
+            <img
+              className="product-image"
+              src={ product.thumbnail }
+              alt={ product.title }
+            />
+          </section>
+          <section>
+            <p className="price">{`R$ ${product.price} `}</p>
+            { product.shipping?.free_shipping
+          && <p className="free-product" data-testid="free-shipping">Frete grátis</p> }
+            <p className="available">
+              {`Itens Disponiveis: ${product.available_quantity}`}
+            </p>
+          </section>
+        </div>
         <button
+          className="button-section"
           type="button"
           data-testid="product-detail-add-to-cart"
           onClick={ this.handleClick }
         >
-          Add to Cart
+          Adicionar ao Carrinho
         </button>
         <Forms
           messageDescription={ messageDescription }
